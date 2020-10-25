@@ -3,7 +3,7 @@
 # Presentación de *Admin/Tienda*
 ---
 ***Admin/Tienda*** es un prototipo de tienda en línea escrito en **Laravel 7** y **Vue 3** que echa mano de la plantilla AdminLte 3.
-A partir de este prototipo, que consta básicamente de un crud que conecta un backend en PHP y Laravel con un fronted escrito en Vue, puedes desarrollar tu propia administración de una tienda en línea de forma totalmente sencilla.  
+A partir de este prototipo puedes desarrollar tu propia administración de una tienda en línea, de forma totalmente sencilla y comprensible. ]¡Suerte! :+1:  
 
 * Descarga.
 * Instatalación en simples pasos. 
@@ -12,8 +12,8 @@ A partir de este prototipo, que consta básicamente de un crud que conecta un ba
 ___
 ## Descarga
 
-1. Imagino que ya tienes instalado algunos de los paquetes que te permitan ejecutar montar un servidor de prueba para aplicaciones Laravel, como por ejemplo el paquete *Laragon*.
-En ese caso, dirigite a la carpeta que aloja tus proyectos dentro del directorio de dicho paquete (la carpeta llamada "www" en el caso de Laragon, por ejemplo).
+1. Imagino que ya has instalado alguno de los paquetes que permiten montar un servidor de prueba para aplicaciones Laravel, como por ejemplo *Laragon*.
+En ese caso, dirigite a la carpeta que aloja tus proyectos dentro del directorio de dicho paquete (la carpeta llamada "www" en el caso de *Laragon*, por ejemplo).
 
 2. Dentro de esa carpeta, ejecutá el siguiente comando en tu consola:
 
