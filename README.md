@@ -66,7 +66,7 @@ Cualquiera de estos comandos generará una compilación *de desarrollo*, lo cual
 * Buscá el archivo *.env* (que contiene las variables de entorno): pero no lo encontrarás.
 * Creá vos mismo ese archivo llamado *.env* y agregale el contenido de *.env.example* (no resultó algo tan difícil, ¿verdad?).
 * Buscá en tu nuevo archivo *.env* el apartado de base de datos y hacé coincidir las constantes de configuración como **DB_DATABASE**, **DB_USERNAME** y **DB_PASSWORD** con las credenciales de la base de datos que crearás a continuación.
-*Finalmente (¡y como quizás ya adivinaste!), creá tu base de datos.
+* Finalmente deberás crear tu base de datos.
 
 6. Volvamos como último paso a nuestra consola artisan y ejecutemos nuestras *migrations*:
 
@@ -74,5 +74,9 @@ Cualquiera de estos comandos generará una compilación *de desarrollo*, lo cual
 php artisan migrate
 ```
 
-Esto llenará con nuestra base de datos recién creada con las tablas necesarias para comenzar a trabajar :smail: :+1:.
+Esto llenará nuestra base de datos recién creada con las tablas necesarias para comenzar a trabajar.
+
+7. Un último paso será enlazar nuestro *storage* (que es el lugar donde se almacenan las imágenes y otros archivos de nuestra aplicación) con la carpeta *public*
+
+Ahora sí estamos listos para continuar el trabajo. Espero te haya sido de utilidad. Suerte  :+1:.
 
