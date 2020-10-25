@@ -30,8 +30,8 @@ Muy bien, ya tienes los archivos necesarios en tu equipo y ahora corresponde pon
 php artisan key:generete
 ```
 
-2. Como puedes ver, tienes una estructura de archivos y directorios compatible con la de una aplicación Laravel típica, pero falta la carpeta *vendor*, entre otras. Esto se debe a que dicha carpeta se incluyó en el *.gitignore*.
-Pero todo lo que allí había (librerías externas) se puede recuperar fácilmente con el siguiente comando:
+2. Como puedes ver, tienes una estructura de archivos y directorios compatible con la de una aplicación Laravel típica, a excepción de algunas carpetas, principalmente *vendor*, en la que se encuentran las dependencias de nuestro proyecto. Esta falta se debe a que dicha carpeta se incluyó en el *.gitignore*.
+La solución no podría ser más sencilla. Insertar el siguiente comando generará una carpeta *vendor* con las dependecias especificadas en nuestro *composer.json*:
 
 ```
 composer install
