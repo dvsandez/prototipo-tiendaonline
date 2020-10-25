@@ -3,7 +3,7 @@
 # Presentación de *Admin/Tienda*
 ---
 ***Admin/Tienda*** es un prototipo de tienda en línea escrito en **Laravel 7** y **Vue 3** que echa mano de la plantilla AdminLte 3.
-A partir de este prototipo puedes desarrollar tu propia administración de una tienda en línea, de forma totalmente sencilla y comprensible. ]¡Suerte! :+1:  
+A partir de este prototipo puedes desarrollar tu propia administración de una tienda en línea, de forma totalmente sencilla y comprensible. ¡Buena uerte! :+1:  
 
 * Descarga.
 * Instatalación en simples pasos. 
