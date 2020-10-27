@@ -91,8 +91,8 @@ import { mapActions, mapState } from "vuex";
                 let file = e.target.files[0];
                 this.images = file;
             },
-            async completedUpdate(a){
-                await this.updateProduct(a);
+            async completedUpdate(form){
+                await this.updateProduct(form);
                 await this.getProducts();
                 $('#edit').modal('hide');
             },

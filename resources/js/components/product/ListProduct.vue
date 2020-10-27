@@ -45,6 +45,9 @@
 
                </tr>
            </tbody>
+           <tbody v-else class="sinclass">
+
+           </tbody>
 
        </table>
         <EditProduct :item="bind_data"></EditProduct>
@@ -88,6 +91,9 @@ import DropProduct from './DropProduct.vue';
             ...mapMutations(['select_']),
             changeInProduct(prod){
                 this.binding("#edit", prod);
+            },
+            changeImage(){
+
             },
             clearProduct(prod){
                 this.binding("#delete", prod);
