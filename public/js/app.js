@@ -6998,7 +6998,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* #app {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #2c3e50;\n  margin-top: 60px;\n} */\nul li .router-link-exact-active{\n  background-color: red;\n}\n", ""]);
+exports.push([module.i, "\nul li .router-link-exact-active{\n  background-color: red;\n}\n", ""]);
 
 // exports
 
@@ -57949,31 +57949,18 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   //mode: 'history',
-  routes: [
-  /*         {
-              path: "/",
-              name: "listProducts",
-              component: ()=> import("./components/listProducts.vue"),
-          }, */
-  {
-    path: '/',
+  routes: [{
+    path: '/product',
+    name: 'product',
     component: function component() {
       return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./components/Product.vue */ "./resources/js/components/Product.vue"));
     },
     children: [{
-      path: '/',
+      path: 'list',
       name: 'list-product',
       component: function component() {
         return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./components/product/ListProduct.vue */ "./resources/js/components/product/ListProduct.vue"));
       }
-      /*                     children: [
-                              {
-                                  path: 'edit/:id',
-                                  name: 'edit-product',
-                                  component: ()=> import("./components/product/editProduct.vue")
-                              }
-                          ] */
-
     }, {
       path: 'add',
       name: 'add-product',

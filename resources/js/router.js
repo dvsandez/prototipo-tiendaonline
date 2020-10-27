@@ -6,26 +6,15 @@ Vue.use(Router);
 export default new Router({
     //mode: 'history',
     routes: [
-/*         {
-            path: "/",
-            name: "listProducts",
-            component: ()=> import("./components/listProducts.vue"),
-        }, */
         {
-            path: '/',
+            path: '/product',
+            name: 'product',
             component: ()=> import("./components/Product.vue"),
             children:[
                 {
-                    path: '/',
+                    path: 'list',
                     name: 'list-product',
                     component: ()=> import("./components/product/ListProduct.vue"),
-/*                     children: [
-                        {
-                            path: 'edit/:id',
-                            name: 'edit-product',
-                            component: ()=> import("./components/product/editProduct.vue")
-                        }
-                    ] */
                 },
                 {
                     path: 'add',

@@ -200,7 +200,7 @@ return [
 
     'password_email_url' => 'password/email',
 
-    'profile_url' => false,
+    'profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -243,7 +243,7 @@ return [
         ],
         [
             'text'        => 'Productos',
-            'url'         => 'admin#/product/',
+            'url'         => 'admin#/product',
             'icon'        => 'far fa-fw fa-file',
             //'label'       => 4,
             //'label_color' => 'success',
@@ -366,7 +366,7 @@ return [
 
     'plugins' => [
         'Bootstrap' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -431,7 +431,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
