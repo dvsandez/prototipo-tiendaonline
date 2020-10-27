@@ -30,7 +30,7 @@
                </tr>
            </thead>
 
-           <tbody v-if="list_items != []">
+           <tbody v-if="list_items !== []">
                <tr v-for="(item, index) of list_items" :key="index">
 
                     <th> {{item.name}} </th>
@@ -45,10 +45,6 @@
 
                </tr>
            </tbody>
-           <tbody v-else class="sinclass">
-
-           </tbody>
-
        </table>
         <EditProduct :item="bind_data"></EditProduct>
         <DropProduct :item="bind_data"></DropProduct>
@@ -91,9 +87,6 @@ import DropProduct from './DropProduct.vue';
             ...mapMutations(['select_']),
             changeInProduct(prod){
                 this.binding("#edit", prod);
-            },
-            changeImage(){
-
             },
             clearProduct(prod){
                 this.binding("#delete", prod);
