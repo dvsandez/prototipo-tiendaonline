@@ -89,7 +89,7 @@ import { mapActions, mapState } from "vuex";
             ...mapActions(['updateProduct', 'getProducts']),
             loadImage(e){
                 let file = e.target.files[0];
-                this.images = file;
+                this.form.images = file;
             },
             async completedUpdate(form){
                 await this.updateProduct(form);
