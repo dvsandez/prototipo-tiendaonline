@@ -27,7 +27,7 @@ Muy bien, ya tienes los archivos necesarios en tu equipo y ahora corresponde pon
 1. *Laravel 7* necesita que ejecutes el comando siguiente para asignarle una clave a tu aplicación:
 
 ```
-php artisan key:generete
+php artisan key:generate
 ```
 
 2. Como puedes ver, tienes una estructura de archivos y directorios compatible con la de una aplicación Laravel típica, a excepción de algunas carpetas, principalmente *vendor*, en la que se deberían encontrar las dependencias de nuestro proyecto. Esta falta se debe a que dicha carpeta se incluyó en el *.gitignore*.
