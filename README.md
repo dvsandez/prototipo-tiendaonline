@@ -30,14 +30,7 @@ Muy bien, ya tienes los archivos necesarios en tu equipo y ahora corresponde pon
 cd prototipo-tiendaonline
 ```
 
-
-2. *Laravel 7* necesita que ejecutes el comando siguiente para asignarle una clave a tu aplicación:
-
-```
-php artisan key:generate
-```
-
-3. Como puedes ver, tienes una estructura de archivos y directorios compatible con la de una aplicación Laravel típica, a excepción de algunas carpetas, principalmente *vendor*, en la que se deberían encontrar las dependencias de nuestro proyecto. Esta falta se debe a que dicha carpeta se incluyó en el *.gitignore*.
+2. Como puedes ver, tienes una estructura de archivos y directorios compatible con la de una aplicación Laravel típica, a excepción de algunas carpetas, principalmente *vendor*, en la que se deberían encontrar las dependencias de nuestro proyecto. Esta falta se debe a que dicha carpeta se incluyó en el *.gitignore*.
 La solución no podría ser más sencilla. Insertar el siguiente comando generará una carpeta *vendor* con las dependecias especificadas en nuestro *composer.json*:
 
 ```
@@ -45,8 +38,16 @@ composer install
 ```
 ---
 NOTA: para que el comando anterior funcione debes tener instalado ***composer*** en tu equipo.
+
 ---
----
+
+3. Ahora que tienes la carpeta *vendor*, *Laravel 7* necesita que ejecutes el comando siguiente para asignarle una clave a tu aplicación:
+
+```
+php artisan key:generate
+```
+
+
 4. Del mismo modo que acabamos de crear la carpeta *vendor*, ahora lo haremos con la carpeta *node_modules*, que alojará nuestras dependencias de javascript.
 Para ello, ejecutamos este comando:
 ```
@@ -54,8 +55,9 @@ npm install
 ```
 ---
 NOTA: para que el comando anterior funcione debes tener instalado ***nodejs*** en tu equipo.
--
+
 ---
+
 5. Como utilizamos *Vue*, ahora debemos compilar nuestro código javascript en la carpeta *public*.
 Eso lo hacemos con este otro comando:
 ```
