@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 //import {routes} from './router';
 import axios from 'axios';
+import { isArray } from 'lodash';
 
 Vue.use(Vuex);
 
@@ -42,6 +43,7 @@ export default new Vuex.Store({
             const url = "http://localhost/crud-tienda/public/admin_products";
             const res = await axios.post(url,formData
             ).then(res => res.data);
+            console.log(res);
             commit('select_', res);
         },
         async getProducts({ commit }){
@@ -49,6 +51,12 @@ export default new Vuex.Store({
             let res = await axios.get(url
             ).then(res => res.data);
             commit('fill_', res);
+        },
+        async showProduct({ commit }, data){
+            const url = `http://localhost/crud-tienda/public/admin_products/${data}`;
+            let res = await axios.get(url).then(res => res.data);
+            if(isArray(res)) res = res[0];
+            commit('select_', res);
         },
         async updateProduct({ commit }, data){
             const formData = new FormData();
@@ -62,8 +70,10 @@ export default new Vuex.Store({
             formData.append('category', data.category);
             formData.append('description', data.description);
             formData.append('images', data.images);
-            const url = `http://localhost/crud-tienda/public/admin_products/${data.id}`;
-            const res = await axios.put(url, data).then(res => res.data );
+            formData.append('imgUrl', data.imgUrl);
+            const url = `http://localhost/crud-tienda/public/admin_products/${data.id}/edit`;
+            const res = await axios.post(url, formData).then(res => res.data );
+            console.log(res);
             commit('select_', res);
         },
         async deleteProduct({ commit }, data){

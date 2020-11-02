@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Mockery\Undefined;
 
 use function GuzzleHttp\Promise\all;
 
@@ -27,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -58,52 +60,68 @@ class ProductController extends Controller
         }
         $product->stock = 0;
         $product->save();
-        return $product;
+        return $request;
     }
 
     /**
      * Display the specified resource.
-     *
+     * @param int $id
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::whereId($id)->get();
+        $product = $product[0];
+        $product->images = Storage::response("public/$product->images");;
+        return $product;
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        /* $product = Product::whereId($id)->get();
+        $product = $product[0];
+        $product->images = Storage::response("public/$product->images");;
+        return $product; */
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     * @param int $id
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        //
-        Product::whereId($request->id)->update([
-            'name' => $request->name,
-            'trademark' => $request->trademark,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'unit_of_measurement' => $request->unit_of_measurement,
-            'category' => $request->category,
-            'images' => "",
-            'stock' => 0
+
+        $this->validate($request, [
+            'images' => 'image'
         ]);
-        return $request->id;
+
+        $product = Product::whereId($request->id)->get();
+        $product = $product[0];
+        $product->name = $request['name'];
+        $product->trademark = $request['trademark'];
+        $product->price = $request['price'];
+        $product->quantity = $request['quantity'];
+        $product->unit_of_measurement = $request['unit_of_measurement'];
+        $product->category = $request['category'];
+        $product->description = $request['description'];
+        if($request->images !== null && $request->images !== ""){
+            $product->images = str_replace("public/", "", $request['images']->store("public"));
+        }else{
+            $product->images = "";
+        }
+
+        $product->save();
+
+        return $product;
     }
 
     /**

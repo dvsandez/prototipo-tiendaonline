@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->enum("category", ["food", "cleaning", "electricity", "work"])->default("food");
             $table->string("description")->nullable();
             $table->string("images")->nullable();
+            $table->string("imgUrl")->nullable();
             $table->integer("stock");
             $table->timestamps();
         });

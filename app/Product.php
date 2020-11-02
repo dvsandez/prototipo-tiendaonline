@@ -9,7 +9,7 @@ class Product extends Model
     protected $fillable = [
         '_token', 'name', 'trademark', 'price', 'quantity',
         'unit_of_measurement', 'category', 'description',
-        'images'
+        'images', 'imgUrl'
     ];
     protected $hidden = [
         'created_at',

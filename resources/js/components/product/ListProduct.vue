@@ -39,14 +39,14 @@
                    <td> {{item.quantity}} </td>
                    <td> {{item.unit_of_measurement}} </td>
                    <td> {{item.category}} </td>
-                   <td v-if="item.images!==''"> <img width="110px" v-bind:src="`storage/${item.images}`" alt=""></td>
+                   <td v-if="item.images!==''"> <img width="110px" v-bind:src="`storage/${item.images}`" alt="" ></td>
                    <td v-else> Añadir imagen </td>
                    <td> <a href="#" class="btn btn-info btn-sm" @click.prevent="changeInProduct(item)"> editar</a> <a href="#" class="btn btn-danger btn-sm" @click.prevent="clearProduct(item)"> borrar</a></td>
 
                </tr>
            </tbody>
        </table>
-        <EditProduct :item="bind_data"></EditProduct>
+        <EditProduct v-bind:item="bind_data"></EditProduct>
         <DropProduct :item="bind_data"></DropProduct>
     </div>
 </template>
@@ -61,6 +61,7 @@ import DropProduct from './DropProduct.vue';
         name: 'listProduct',
         data(){
             return{
+                imgUrl: "",
                 bind_data: {
                     _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     id: "",
@@ -71,7 +72,8 @@ import DropProduct from './DropProduct.vue';
                     unit_of_measurement: "",
                     category: "",
                     description: "",
-                    images: ""
+                    images: "",
+                    imgUrl: ""
                 }
             }
         },
@@ -83,16 +85,16 @@ import DropProduct from './DropProduct.vue';
             ...mapState(['list_items', 'selected_item'])
         },
         methods: {
-            ...mapActions(['getProducts']),
-            ...mapMutations(['select_']),
-            changeInProduct(prod){
-                this.binding("#edit", prod);
+            ...mapActions(['getProducts', 'showProduct']),
+            async changeInProduct(prod){
+                await this.binding("#edit", prod);
             },
-            clearProduct(prod){
-                this.binding("#delete", prod);
+            async clearProduct(prod){
+                await this.binding("#delete", prod);
             },
-            binding(target, info){
-                this.select_(info)
+            async binding(target, info){
+                this.bind_data.imgUrl = info.images;
+                await this.showProduct(info.id);
                 this.bind_data.id = this.selected_item.id;
                 this.bind_data.name = this.selected_item.name;
                 this.bind_data.trademark = this.selected_item.trademark;
@@ -102,7 +104,7 @@ import DropProduct from './DropProduct.vue';
                 this.bind_data.category = this.selected_item.category;
                 this.bind_data.description = this.selected_item.description;
                 this.bind_data.images = this.selected_item.images;
-                console.log(this.bind_data)
+                console.log(this.bind_data.imgUrl);
                 $(target).modal('show');
             }
         },

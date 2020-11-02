@@ -2135,11 +2135,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AddProduct',
   data: function data() {
     return {
+      imageUrl: "",
       form: {
         _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         name: "",
@@ -2153,13 +2158,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
+  computed: {
+    dragImage: function dragImage() {
+      return this.imageUrl;
+    }
+  },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['addProduct'])), {}, {
     loadImage: function loadImage(e) {
       var file = e.target.files[0];
       this.form.images = file;
+      this.readImage(file);
+    },
+    readImage: function readImage(file) {
+      var _this = this;
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this.imageUrl = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
     },
     saveProduct: function saveProduct() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -2167,10 +2189,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.addProduct(_this.form);
+                return _this2.addProduct(_this2.form);
 
               case 2:
-                _this.$router.push({
+                _this2.$router.push({
                   name: 'list-product'
                 });
 
@@ -2373,40 +2395,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'EditProduct',
   data: function data() {
     return {
+      checkOriginalImg: true,
       form: this.item
     };
   },
-  props: ['item'],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['selected_item'])),
+  props: {
+    item: {
+      type: Object,
+      "default": null
+    }
+  },
+  computed: {
+    //        ...mapState(['selected_item']),
+    dragImage: function dragImage() {
+      var change = this.checkOriginalImg ? "storage/" : "";
+      return change + this.form.imgUrl;
+    }
+  },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['updateProduct', 'getProducts'])), {}, {
+    /*   prepareUpdate(){
+          if(document.getElementById('btn-send').attributes("disabled")){
+              console.log("ok, el atributo disabled existe")
+              if(this.form === this.item){
+                  console.log("ok, has cambiado algo");
+               }
+          }
+      }, */
     loadImage: function loadImage(e) {
       var file = e.target.files[0];
-      this.images = file;
+      this.form.images = file;
+      this.readImage(file);
+      this.checkOriginalImg = false;
+    },
+    readImage: function readImage(file) {
+      var _this = this;
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this.form.imgUrl = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
     },
     completedUpdate: function completedUpdate(form) {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return _this.updateProduct(form);
+                console.log(_this2.form);
+                _context.next = 3;
+                return _this2.updateProduct(form);
 
-              case 2:
-                _context.next = 4;
-                return _this.getProducts();
-
-              case 4:
-                $('#edit').modal('hide');
+              case 3:
+                _context.next = 5;
+                return _this2.getProducts();
 
               case 5:
+                $('#edit').modal('hide');
+
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -2415,19 +2479,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     cancelEdit: function cancelEdit() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(_this2.item);
+                console.log(_this3.form.imgUrl);
+                console.log(_this3.form);
                 $('#edit').modal('hide');
-                _context2.next = 4;
-                return _this2.getProducts();
+                _context2.next = 5;
+                return _this3.getProducts();
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -2449,9 +2514,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _EditProduct_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditProduct.vue */ "./resources/js/components/product/EditProduct.vue");
-/* harmony import */ var _DropProduct_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DropProduct.vue */ "./resources/js/components/product/DropProduct.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _EditProduct_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditProduct.vue */ "./resources/js/components/product/EditProduct.vue");
+/* harmony import */ var _DropProduct_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DropProduct.vue */ "./resources/js/components/product/DropProduct.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2518,6 +2591,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: 'listProduct',
   data: function data() {
     return {
+      imgUrl: "",
       bind_data: {
         _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         id: "",
@@ -2528,35 +2602,87 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         unit_of_measurement: "",
         category: "",
         description: "",
-        images: ""
+        images: "",
+        imgUrl: ""
       }
     };
   },
   components: {
-    EditProduct: _EditProduct_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    DropProduct: _DropProduct_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    EditProduct: _EditProduct_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    DropProduct: _DropProduct_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['list_items', 'selected_item'])),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getProducts'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['select_'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['list_items', 'selected_item'])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getProducts', 'showProduct'])), {}, {
     changeInProduct: function changeInProduct(prod) {
-      this.binding("#edit", prod);
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.binding("#edit", prod);
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     clearProduct: function clearProduct(prod) {
-      this.binding("#delete", prod);
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.binding("#delete", prod);
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     binding: function binding(target, info) {
-      this.select_(info);
-      this.bind_data.id = this.selected_item.id;
-      this.bind_data.name = this.selected_item.name;
-      this.bind_data.trademark = this.selected_item.trademark;
-      this.bind_data.price = this.selected_item.price;
-      this.bind_data.quantity = this.selected_item.quantity;
-      this.bind_data.unit_of_measurement = this.selected_item.unit_of_measurement;
-      this.bind_data.category = this.selected_item.category;
-      this.bind_data.description = this.selected_item.description;
-      this.bind_data.images = this.selected_item.images;
-      console.log(this.bind_data);
-      $(target).modal('show');
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.bind_data.imgUrl = info.images;
+                _context3.next = 3;
+                return _this3.showProduct(info.id);
+
+              case 3:
+                _this3.bind_data.id = _this3.selected_item.id;
+                _this3.bind_data.name = _this3.selected_item.name;
+                _this3.bind_data.trademark = _this3.selected_item.trademark;
+                _this3.bind_data.price = _this3.selected_item.price;
+                _this3.bind_data.quantity = _this3.selected_item.quantity;
+                _this3.bind_data.unit_of_measurement = _this3.selected_item.unit_of_measurement;
+                _this3.bind_data.category = _this3.selected_item.category;
+                _this3.bind_data.description = _this3.selected_item.description;
+                _this3.bind_data.images = _this3.selected_item.images;
+                console.log(_this3.bind_data.imgUrl);
+                $(target).modal('show');
+
+              case 14:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   }),
   created: function created() {
@@ -40114,23 +40240,70 @@ var render = function() {
         _c("div", { staticClass: "form-group row" }, [
           _c(
             "label",
-            { staticClass: "col-md-5", attrs: { for: "images-prod" } },
+            { staticClass: "col-md-7", attrs: { for: "images-prod" } },
             [_vm._v(" Imagen del producto: ")]
           ),
           _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control-file col-md-5",
-            attrs: { type: "file", id: "images-prod", accept: "image/*" },
-            on: { change: _vm.loadImage }
-          })
+          _c("img", { attrs: { src: _vm.dragImage, alt: "" } }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-md-4 bg-success",
+              staticStyle: {
+                position: "relative",
+                margin: "30px",
+                padding: "9px",
+                "border-radius": "8px",
+                height: "60px",
+                width: "150px"
+              }
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("input", {
+                staticStyle: {
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  right: "0px",
+                  bottom: "0px",
+                  width: "100%",
+                  height: "100%",
+                  cursor: "pointer",
+                  opacity: "0"
+                },
+                attrs: { type: "file", id: "images-prod", accept: "image/*" },
+                on: { change: _vm.loadImage }
+              })
+            ]
+          )
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _vm._m(1)
       ]
     )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "p",
+      {
+        staticStyle: {
+          "text-align": "center",
+          color: "white",
+          "font-size": "22px",
+          cursor: "pointer"
+        }
+      },
+      [_c("i", [_vm._v(" Buscar imagen ")])]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -40282,7 +40455,7 @@ var render = function() {
                 _c(
                   "label",
                   { staticClass: "col-md-3", attrs: { for: "nombre-prod" } },
-                  [_vm._v(" NomBre: ")]
+                  [_vm._v(" Nombre: ")]
                 ),
                 _vm._v(" "),
                 _c("input", {
@@ -40533,22 +40706,65 @@ var render = function() {
               _c("div", { staticClass: "form-group row" }, [
                 _c(
                   "label",
-                  { staticClass: "col-md-5", attrs: { for: "images-prod" } },
-                  [_vm._v(" Imagen del producto: ")]
+                  { staticClass: "col-md-7", attrs: { for: "images-prod" } },
+                  [_vm._v(" Imagen del producto:\n                        ")]
                 ),
                 _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control-file col-md-5",
-                  attrs: { type: "file", id: "images-prod", accept: "image/*" },
-                  on: { change: _vm.loadImage }
-                })
+                _c("img", {
+                  attrs: {
+                    src: _vm.dragImage,
+                    width: "700px",
+                    alt: _vm.form.name + "-" + _vm.form.trademark
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-4 bg-success",
+                    staticStyle: {
+                      position: "relative",
+                      margin: "30px",
+                      padding: "9px",
+                      "border-radius": "8px",
+                      height: "60px",
+                      width: "150px"
+                    }
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticStyle: {
+                        position: "absolute",
+                        top: "0px",
+                        left: "0px",
+                        right: "0px",
+                        bottom: "0px",
+                        width: "100%",
+                        height: "100%",
+                        cursor: "pointer",
+                        opacity: "0"
+                      },
+                      attrs: {
+                        type: "file",
+                        id: "images-prod",
+                        accept: "image/*"
+                      },
+                      on: { change: _vm.loadImage }
+                    })
+                  ]
+                )
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [
               _c(
                 "button",
-                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit", id: "btn-send" }
+                },
                 [_vm._v(" Guardar cambios ")]
               ),
               _vm._v(" "),
@@ -40578,6 +40794,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
+      _c("h2", [
+        _vm._v(
+          "\n                        Editar Producto\n                    "
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -40587,6 +40809,23 @@ var staticRenderFns = [
         [_c("span", [_vm._v("×")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "p",
+      {
+        staticStyle: {
+          "text-align": "center",
+          color: "white",
+          "font-size": "18px",
+          cursor: "pointer"
+        }
+      },
+      [_c("i", [_vm._v(" Buscar imagen ")])]
+    )
   }
 ]
 render._withStripped = true
@@ -58001,6 +58240,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -58021,6 +58262,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
  //import {routes} from './router';
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
@@ -58076,9 +58318,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 14:
                 res = _context.sent;
+                console.log(res);
                 commit('select_', res);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -58112,14 +58355,41 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee2);
       }))();
     },
-    updateProduct: function updateProduct(_ref3, data) {
+    showProduct: function showProduct(_ref3, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var commit, formData, url, res;
+        var commit, url, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref3.commit;
+                url = "http://localhost/crud-tienda/public/admin_products/".concat(data);
+                _context3.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(url).then(function (res) {
+                  return res.data;
+                });
+
+              case 4:
+                res = _context3.sent;
+                if (Object(lodash__WEBPACK_IMPORTED_MODULE_4__["isArray"])(res)) res = res[0];
+                commit('select_', res);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    updateProduct: function updateProduct(_ref4, data) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var commit, formData, url, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref4.commit;
                 formData = new FormData();
                 formData.append('_token', data._token);
                 formData.append('id', data.id);
@@ -58131,48 +58401,50 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 formData.append('category', data.category);
                 formData.append('description', data.description);
                 formData.append('images', data.images);
-                url = "http://localhost/crud-tienda/public/admin_products/".concat(data.id);
-                _context3.next = 15;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.put(url, data).then(function (res) {
+                formData.append('imgUrl', data.imgUrl);
+                url = "http://localhost/crud-tienda/public/admin_products/".concat(data.id, "/edit");
+                _context4.next = 16;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, formData).then(function (res) {
                   return res.data;
                 });
 
-              case 15:
-                res = _context3.sent;
-                commit('select_', res);
-
-              case 17:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    deleteProduct: function deleteProduct(_ref4, data) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var commit, url, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref4.commit;
-                url = "http://localhost/crud-tienda/public/admin_products/".concat(data);
-                _context4.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"](url).then(function (res) {
-                  return res.data;
-                });
-
-              case 4:
+              case 16:
                 res = _context4.sent;
+                console.log(res);
                 commit('select_', res);
 
-              case 6:
+              case 19:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4);
+      }))();
+    },
+    deleteProduct: function deleteProduct(_ref5, data) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var commit, url, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref5.commit;
+                url = "http://localhost/crud-tienda/public/admin_products/".concat(data);
+                _context5.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"](url).then(function (res) {
+                  return res.data;
+                });
+
+              case 4:
+                res = _context5.sent;
+                commit('select_', res);
+
+              case 6:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }

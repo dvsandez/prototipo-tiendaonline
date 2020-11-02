@@ -22,4 +22,6 @@ Auth::routes();
 
 Route::get('/admin/{options?}/{params?}', 'AdminController@index')->name('admin')->middleware('auth');
 
-Route::resource('/admin_products', 'ProductController')->except(['create', 'show', 'edit'])->middleware('auth');
+Route::resource('/admin_products', 'ProductController')->except(['create', 'edit', 'update'])->middleware('auth');
+
+Route::post('/admin_products/{id}/edit', 'ProductController@update')->middleware('auth');
