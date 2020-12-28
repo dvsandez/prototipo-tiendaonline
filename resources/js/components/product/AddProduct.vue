@@ -44,8 +44,12 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-md-5" for="images-prod"> Imagen del producto: </label>
-                    <input type="file" class="form-control-file col-md-5" id="images-prod" accept="image/*" @change="loadImage">
+                <label class="col-md-7" for="images-prod"> Imagen del producto: </label>
+                    <img :src="dragImage" alt="">
+                    <div class="col-md-4 bg-success" style="position:relative; margin:30px; padding:9px; border-radius:8px; height:60px; width:150px;">
+                        <p style="text-align: center; color: white; font-size: 22px; cursor: pointer;"> <i> Buscar imagen </i> </p>
+                        <input type="file" style="position:absolute; top:0px; left:0px; right:0px; bottom:0px; width:100%; height:100%; cursor:pointer; opacity:0;" id="images-prod" accept="image/*" @change="loadImage">
+                    </div>
             </div>
 
             <div>
@@ -64,6 +68,7 @@ import { mapActions, mapState } from "vuex";
         name: 'AddProduct',
         data(){
             return{
+                imageUrl: "",
                 form: {
                 _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 name: "",
@@ -77,11 +82,24 @@ import { mapActions, mapState } from "vuex";
                 }
             }
         },
+        computed: {
+            dragImage: function(){
+                return this.imageUrl;
+            }
+        },
         methods: {
             ...mapActions(['addProduct']),
             loadImage(e){
                 let file = e.target.files[0];
                 this.form.images = file;
+                this.readImage(file);
+            },
+            readImage(file){
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imageUrl = e.target.result;
+                }
+                reader.readAsDataURL(file);
             },
             async saveProduct(){
                 await this.addProduct(this.form);

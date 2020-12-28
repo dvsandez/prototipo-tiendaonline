@@ -18,20 +18,10 @@ Route::get('/', function () {
     return view('inicio');
 })->name('inicio');
 
-/* Route::get('/vue', function () {
-    return view('inicio');
-}); */
-
-//Route::get("/product", "ProductController@create");
-
 Auth::routes();
-
-//Route::redirect('/', '/tienda/public/admin', 301);
 
 Route::get('/admin/{options?}/{params?}', 'AdminController@index')->name('admin')->middleware('auth');
 
-//Route::get('/admin/products', 'ProductController@index')->name('getProducts');
+Route::resource('/admin_products', 'ProductController')->except(['create', 'edit', 'update'])->middleware('auth');
 
-//Route::post('/admin/product', 'ProductController@store')->name('addProduct')->middleware('auth');
-
-Route::resource('/admin_products', 'ProductController')->except(['create', 'show', 'edit'])->middleware('auth');
+Route::post('/admin_products/{id}/edit', 'ProductController@update')->middleware('auth');

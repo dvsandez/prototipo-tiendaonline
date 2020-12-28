@@ -243,7 +243,7 @@ return [
         ],
         [
             'text'        => 'Productos',
-            'url'         => 'admin/',
+            'url'         => 'admin#/product/',
             'icon'        => 'far fa-fw fa-file',
             //'label'       => 4,
             //'label_color' => 'success',
@@ -366,7 +366,7 @@ return [
 
     'plugins' => [
         'Bootstrap' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -431,7 +431,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
