@@ -98,6 +98,6 @@ una vez que arranques tu servidor.
 ---
 Recordá que para empezar a probar y a desarrollar a partir de este prototipo deberás crear un usuario  y una contraseña, pues se te pedirá que inicies sesión o te registres para ingresar al panel de administración.
 
-Toda la suerte  :+1:.
+
 
 ---
